@@ -2,7 +2,7 @@
 """
 Created on Wed Jan 12 12:14:19 2022
 
-@author: Jayanth S
+@author: Keerthana_Jayanth
 """
 #%%
 #Import the required libraries
@@ -119,6 +119,8 @@ n_list = [100, 1000, 10000] #each item specifies the no. of samples to obtain fr
 #Plot the histogram (Density plot) of Multinomail Distribution Samples
 probs = [0.2, 0.4, 0.3, 0.1]
 
+print("--------------------------Problem 1-----------------------------------")
+
 Multinomial_samples(probs, n_list)
 
 #Plot the histogram (Density plot) of Uniformly Distributed Samples
@@ -153,11 +155,15 @@ Problem 2 :
         2. Box-Muller Transform
 """
 
-mean = 2
-variance = 10
+mean = 10
+variance = 5
 n = 10000
 low = 0
 high = 1
+
+print("--------------------------Problem 2-----------------------------------")
+
+
 # random.seed(5)
 uniform_samples = random.uniform(low, high, size = n)
 #Inverse Transform method
@@ -177,16 +183,24 @@ print(f"Estimated Mean = {BM_mean} and variance = {BM_variance} of samples obtai
 
         
 true_normal = random.normal(mean, np.sqrt(variance), size = n)
-# fig, ax = plt.figure()
+fig= plt.figure(figsize = (10,5))
 x = np.linspace(mean - 5*variance, mean + 5*variance, n)
 plt.plot(x, stats.norm.pdf(x, mean, np.sqrt(variance)), color = 'red')
 sns.histplot(IT_samples,  bins= 100, stat = 'density', color = 'blue')
-sns.histplot(BM_samples,  bins= 100, stat = 'density', color = 'green' )
-
-plt.legend(["Using Inbuilt Distribution", "Inverse Transform Method", "Box-Muller Algorithm"])
-plt.ylim([0,0.5])
+plt.legend([f"True Distribution $\mu ={mean}$, $\sigma^2 ={variance}$", "Inverse Transform Method"])
+plt.xlabel("x")
+# plt.ylim([0,0.5])
 plt.xlim([-2*variance + mean , 2*variance + mean ])
+plt.show()
 
+fig = plt.figure(figsize = (10,5))
+plt.plot(x, stats.norm.pdf(x, mean, np.sqrt(variance)), color = 'red')
+sns.histplot(BM_samples,  bins= 100, stat = 'density', color = 'green' )
+plt.xlabel("x")
+plt.legend([f"True Distribution $\mu ={mean}$, $\sigma^2 ={variance}$", "Box-Muller Method"])
+# plt.ylim([0,0.5])
+plt.xlim([-2*variance + mean , 2*variance + mean ])
+plt.show()
 
 #%%
 """
@@ -204,17 +218,37 @@ area_g = np.mean(g)*(high-low)
 func = lambda x : np.sqrt(np.sin(x))
 numerical_area_g = scipy.integrate.quad(func,low, high)[0]
 
+print("--------------------------Problem 3-----------------------------------")
+
+fig = plt.figure(figsize = (8,5))
+x = np.linspace(low,high, num = n)
+plt.plot(x, np.sqrt(np.sin(x)))
+plt.xlabel("x")
+plt.ylabel("$\sqrt{(sin(x))}$")
+# plt.ylim([0,0.5])
+plt.xlim([low, high])
+plt.show()
+
 print(f"Area of sqrt(sin(x)) without using numerical technique is {area_g}.")
 print(f"Area of sqrt(sin(x)) using numerical technique (scipy integrate) is {numerical_area_g}.")
 print(f"The error in the calculation is {abs(numerical_area_g - area_g)} for no. of samples being {n}.")
 print()
 #Intergrate sqrt(sinx)*exp(-x^2)
 
-g = np.sqrt(np.sin(x))*np.exp(x)
+g = np.sqrt(np.sin(x))*np.exp(-x**2)
 scipy.integrate
 area_g = np.mean(g)*(high-low)
-func = lambda x : np.sqrt(np.sin(x))*np.exp(x)
+func = lambda x : np.sqrt(np.sin(x))*np.exp(-x**2)
 numerical_area_g = scipy.integrate.quad(func,low, high)[0]
+
+fig = plt.figure(figsize = (8,5))
+x = np.linspace(low,high, num = n)
+plt.plot(x, np.sqrt(np.sin(x))*np.exp(-x**2))
+plt.xlabel("x")
+plt.ylabel("$\sqrt{(sin(x))}e^{-x^2}$")
+# plt.ylim([0,0.5])
+plt.xlim([low, high])
+plt.show()
 
 print(f"Area of sqrt(sin(x))*exp(-x**2) without using numerical technique is {area_g}.")
 print(f"Area of sqrt(sin(x))*exp(-x**2) using numerical technique (scipy integrate) is {numerical_area_g}.")
@@ -272,12 +306,15 @@ PTM = np.array([[4/6, 1/6, 1/6, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0 , 0, 0, 5/6, 1/6],
                 [0, 0, 0, 0, 0 , 0, 0, 0, 1]])
 N = 50000
-SnakeAndLadder(PTM, initial_state = 1 , n_runs = N, end_state = 4)
+
+print("--------------------------Problem 4-----------------------------------")
+
+SnakeAndLadder(PTM, initial_state = 0 , n_runs = N, end_state = 8)
 
 """
 Inference:
     * The given Markov Chain contains both transient states and recurrent states.
-    * Since starting form states 2 or 4 we may not be able to reach other states (not accessable),
+    * Since starting form states 2 or 4 we may not be able to reach other states (not accessible),
       we say that the Markov chain is reducible and hence the Markov chain is not ergodic.
     * Also, steady state distribution doesn't exist because of the transitions between state 2 and 4.
 """
