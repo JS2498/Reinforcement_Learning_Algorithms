@@ -1,1 +1,1 @@
-# Reinforcement Learning Assignmets
+# Assignments of Reinforcement Learning Course
