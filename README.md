@@ -1,1 +1,1 @@
-# Assignments of Reinforcement Learning Course
+# This repository contains implementation of (Deep) Reinforcement Learning Algorithms
